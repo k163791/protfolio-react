@@ -20,12 +20,19 @@ const PortfolioSchema = new mongoose.Schema({
   update: Date,
   Github: String,
   LinkedIn: String,
-  Projects: {
-    name: String,
-    technologies: [],
-    description: String,
-    date: Date,
+  aboutme: {
+    type: String,
+    trim: true,
+    required: "About me is required",
   },
+  Projects: [
+    {
+      name: String,
+      technologies: [],
+      description: String,
+      date: Date,
+    },
+  ],
 });
 
 export default mongoose.model("Portfolio", PortfolioSchema);
