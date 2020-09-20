@@ -4,6 +4,7 @@
   "description": "This is my online portfolio i am making as part of a job task",
   "main": "server.js",
   "scripts": {
+    "development": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Uzair",
