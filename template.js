@@ -3,16 +3,10 @@ export default () => {
         <html lang="en">
             <head>
                 <meta charset="utf-8">
-                <title>MERN Skeleton</title>
-                <link rel="stylesheet"
-href="https://fonts.googleapis.com/css?family=Roboto:100,300,400">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-rel="stylesheet">
+                <title>Portfolio App</title>
             </head>
             <body>
-                <div id="root"></div>
-                <style ud="jss-server-side"></style>
-                <script type="text/javascript" src="/dist/bundle.js"></script>
+                <h1>Hello Friend</h1>
             </body>
         </html>
     `;
