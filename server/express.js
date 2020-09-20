@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import helmet from 'helmet'
 import path from 'path'
-
+import compress from 'compression'
 
 const app = express()
 app.use(bodyParser.json())

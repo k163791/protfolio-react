@@ -17,5 +17,5 @@ app.listen(config.port, (err) => {
 	if(err) {
 		console.log(err)
 	}
-	console.log("Server started on port %s.", config.poty);
-}
+	console.log("Server started on port %s.", config.port);
+});
