@@ -17,7 +17,7 @@ import portfolioRoutes from "./routes/portfolio.routes";
 import Template from "./../template";
 
 const app = express();
-// devBundle.compile(app);
+devBundle.compile(app);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
