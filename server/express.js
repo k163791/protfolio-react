@@ -7,6 +7,7 @@ import path from 'path'
 import compress from 'compression'
 
 const app = express()
+devBundle.compile(app)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cookieParser())
