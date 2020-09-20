@@ -6,7 +6,9 @@ export default () => {
                 <title>Portfolio App</title>
             </head>
             <body>
-                <h1>Hello Friend</h1>
+                <div id="root"></div>
+                <style ud="jss-server-side"></style>
+                <script type="text/javascript" src="/dist/bundle.js"></script>
             </body>
         </html>
     `;
