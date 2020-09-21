@@ -13,6 +13,9 @@ const PortfolioSchema = new mongoose.Schema({
     match: [/.+\@.+\..+/, "Please fill a valid email"],
     required: "Email is required",
   },
+  phone_number: {
+    type: "String",
+  },
   created: {
     type: Date,
     default: Date.now(),
@@ -25,12 +28,13 @@ const PortfolioSchema = new mongoose.Schema({
     trim: true,
     required: "About me is required",
   },
-  Projects: [
+  projects: [
     {
       name: String,
       technologies: [],
       description: String,
       date: Date,
+      github: String,
     },
   ],
 });

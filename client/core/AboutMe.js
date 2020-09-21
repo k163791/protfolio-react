@@ -1,11 +1,11 @@
 import React from "react";
 import { Container, Row, Col, Card, Image } from "react-bootstrap";
-import me from "./../assets/images/me.jpg";
+import me from "./../assets/images/me1.jpg";
 
 export default function About() {
   return (
-    <Container id="about">
-      <h1>About Me</h1>
+    <Container id="about" style={{ marginBottom: "100px" }}>
+      <h1 style={{ color: "#DB4437" }}>About Me</h1>
       <hr />
       <Row style={{ justifyContent: "space-evenly" }}>
         <Col>
@@ -16,7 +16,7 @@ export default function About() {
           </p>
         </Col>
         <Col>
-          <Image src={me} style={{ height: "500px", width: "100%" }} rounded />
+          <Image src={me} style={{ height: "100%", width: "100%" }} rounded />
         </Col>
       </Row>
     </Container>

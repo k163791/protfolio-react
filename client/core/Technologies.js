@@ -10,9 +10,9 @@ import express from "./../assets/images/express.png";
 
 export default function Tech() {
   return (
-    <div id="technologies">
+    <div id="technologies" style={{ marginBottom: "100px" }}>
       <Container>
-        <h1>Technologies</h1>
+        <h1 style={{ color: "#F4B400" }}>Technologies</h1>
         <hr />
         <p>These are some of the technologies that i have worked on</p>
         <Card>

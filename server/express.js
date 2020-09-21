@@ -7,7 +7,10 @@ import helmet from "helmet";
 import path from "path";
 import compress from "compression";
 import devBundle from "./devBundle";
-
+import React from "react";
+import ReactDOMServer from "react-dom/server";
+import StaticRouter from "react-router-dom/StaticRouter";
+import MainRouter from "./../client/MainRouter";
 //  Import Routes
 import portfolioRoutes from "./routes/portfolio.routes";
 // import devBundle from "./devBundle";
@@ -30,8 +33,22 @@ app.use("/", portfolioRoutes);
 const CURRENT_WORKING_DIR = process.cwd();
 app.use("/dist", express.static(path.join(CURRENT_WORKING_DIR, "dist")));
 
-app.get("/", (req, res) => {
-  res.status(200).send(Template());
+app.get("*", (req, res) => {
+  const context = {};
+  const markup = ReactDOMServer.renderToString(
+    <StaticRouter location={req.url} context={context}>
+      <MainRouter />
+    </StaticRouter>
+  );
+  if (context.url) {
+    return res.redirect(303, context.url);
+  }
+
+  res.status(200).send(
+    Template({
+      markup: markup,
+    })
+  );
 });
 
 export default app;
