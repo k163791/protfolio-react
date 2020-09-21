@@ -3,12 +3,14 @@ export default () => {
         <html lang="en">
             <head>
                 <meta charset="utf-8">
+
                 <title>Portfolio App</title>
             </head>
             <body>
                 <div id="root"></div>
                 <style ud="jss-server-side"></style>
-                <script type="text/javascript" src="/dist/bundle.js"></script>
+                <script type="text/javascript" src="/dist/bundle.js"></script> 
+
             </body>
         </html>
     `;
