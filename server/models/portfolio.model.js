@@ -21,11 +21,10 @@ const PortfolioSchema = new mongoose.Schema({
     default: Date.now(),
   },
   update: Date,
-  Github: String,
-  LinkedIn: String,
+  github: String,
+  linkedIn: String,
   aboutme: {
     type: String,
-    trim: true,
     required: "About me is required",
   },
   projects: [
