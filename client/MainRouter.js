@@ -10,7 +10,7 @@ const MainRouter = () => {
       <NavbarMenu />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/edit" component={Portfolio} />
+        <Route path="/edit/:portfolioId" component={Portfolio} />
       </Switch>
     </div>
   );
