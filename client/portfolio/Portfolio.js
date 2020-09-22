@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
+// import { read } from "api-portfolio";
 
 export default function Portfolio({ match }) {
   const [show, setShow] = useState(false);
@@ -8,12 +9,34 @@ export default function Portfolio({ match }) {
   const handleShow = () => setShow(true);
 
   const handleSubmit = (event) => {
-    // event.preventDefault();
-    var technologies = document.getElementById("tech").value;
-    var test = [1, 2];
+    event.preventDefault();
+    var selected = document.getElementById("cars");
+    var technologies = [];
+    console.log(selected);
     var name = document.getElementById("name").value;
-    console.log(technologies);
+    // console.log(technologies);
   };
+
+  // useEffect(() => {
+  //   const abortController = new AbortController();
+  //   const signal = abortController.signal;
+
+  //   read(
+  //     {
+  //       userId: match.params.userId,
+  //     },
+  //     signal
+  //   ).then((data) => {
+  //     if (data && data.error) {
+  //       setValues({ ...values, error: data.error });
+  //     } else {
+  //       setValues({ ...values, name: data.name, email: data.email });
+  //     }
+  //   });
+  //   return function cleanup() {
+  //     abortController.abort();
+  //   };
+  // }, [match.params.userId]);
 
   return (
     <div style={{ margin: "100px" }}>
@@ -39,6 +62,7 @@ export default function Portfolio({ match }) {
             </Form.Group>
             <Form.Group>
               <Form.Label>Technologies</Form.Label>
+
               <Form.Control
                 as="select"
                 name="technologies"
