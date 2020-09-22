@@ -63,13 +63,13 @@ export default function Portfolio({ match }) {
         setPortfolio({ ...portfolio, error: data.error });
       } else {
         setPortfolio({ ...portfolio, portfolioId: data._id });
+        setRedirectTo(true);
       }
     });
   };
 
   const handleChange = (name) => (event) => {
     setPortfolio({ ...portfolio, [name]: event.target.value });
-    console.log(portfolio.aboutme);
   };
 
   const handleProjectChange = (name) => (event) => {
