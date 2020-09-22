@@ -11,7 +11,11 @@ router
 router
   .route("/api/portfolio/:portfolioId")
   .get(PortfolioCtrl.read)
-  .post(PortfolioCtrl.update);
+  .put(PortfolioCtrl.update);
+
+router
+  .route("/api/portfolio/project/add/:portfolioId")
+  .put(PortfolioCtrl.updateProjects);
 
 router.param("portfolioId", PortfolioCtrl.portfolioById);
 
