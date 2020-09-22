@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
-// import { read } from "api-portfolio";
+import { list, update, updateProjects } from "./api-portfolio";
+import { Redirect } from "react-router";
 
 export default function Portfolio({ match }) {
   const [show, setShow] = useState(false);
@@ -8,35 +9,123 @@ export default function Portfolio({ match }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    var selected = document.getElementById("cars");
-    var technologies = [];
-    console.log(selected);
-    var name = document.getElementById("name").value;
-    // console.log(technologies);
+  const [portfolio, setPortfolio] = useState({
+    name: "",
+    email: "",
+    github: "",
+    linkedin: "",
+    aboutme: "",
+    phone_number: "",
+  });
+
+  const [projects, setProjects] = useState({
+    name: "",
+    technologies: [],
+    description: "",
+  });
+
+  const [redirectTo, setRedirectTo] = useState(false);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
+    list(signal).then((data) => {
+      if (data && data.error) {
+        console.log(data.error);
+      } else {
+        setPortfolio(data[0]);
+      }
+    });
+
+    return function cleanup() {
+      abortController.abort();
+    };
+  }, []);
+
+  const clickSubmit = () => {
+    const portfolioData = {
+      name: portfolio.name || undefined,
+      email: portfolio.email || undefined,
+      github: portfolio.github || undefined,
+      linkedin: portfolio.linkedin || undefined,
+      phone_number: portfolio.phone_number || undefined,
+      aboutme: portfolio.aboutme || undefined,
+    };
+
+    update(
+      {
+        portfolioId: match.params.portfolioId,
+      },
+      portfolioData
+    ).then((data) => {
+      if (data && data.error) {
+        setPortfolio({ ...portfolio, error: data.error });
+      } else {
+        setPortfolio({ ...portfolio, portfolioId: data._id });
+      }
+    });
   };
 
-  // useEffect(() => {
-  //   const abortController = new AbortController();
-  //   const signal = abortController.signal;
+  const handleChange = (name) => (event) => {
+    setPortfolio({ ...portfolio, [name]: event.target.value });
+    console.log(portfolio.aboutme);
+  };
 
-  //   read(
-  //     {
-  //       userId: match.params.userId,
-  //     },
-  //     signal
-  //   ).then((data) => {
-  //     if (data && data.error) {
-  //       setValues({ ...values, error: data.error });
-  //     } else {
-  //       setValues({ ...values, name: data.name, email: data.email });
-  //     }
-  //   });
-  //   return function cleanup() {
-  //     abortController.abort();
-  //   };
-  // }, [match.params.userId]);
+  const handleProjectChange = (name) => (event) => {
+    setProjects({ ...projects, [name]: event.target.value });
+  };
+
+  const handleTech = (event) => {
+    var tech = document.getElementById("tech").value;
+    tech = tech.split(" ");
+    setProjects({ ...projects, technologies: tech });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    var forward = true;
+    if (projects.name.length <= 0) {
+      alert("Name is Required");
+      forward = false;
+    }
+    if (projects.technologies.length == 0) {
+      alert("Technologies are required");
+      forward = false;
+    }
+
+    if (projects.description.length <= 0) {
+      alert("Description is required");
+      forward = false;
+    }
+
+    if (forward) {
+      const projectsData = {
+        name: projects.name || undefined,
+        technologies: projects.technologies || [],
+        description: projects.description || undefined,
+      };
+
+      updateProjects(
+        {
+          portfolioId: match.params.portfolioId,
+        },
+        projectsData
+      ).then((data) => {
+        if (data && data.error) {
+          console.log(data);
+        } else {
+          console.log(data);
+          handleClose();
+          setRedirectTo(true);
+        }
+      });
+    }
+  };
+
+  if (redirectTo) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div style={{ margin: "100px" }}>
@@ -55,28 +144,33 @@ export default function Portfolio({ match }) {
               <Form.Control
                 name="name"
                 id="name"
-                type="name"
+                type="text"
                 placeholder="Project Name"
+                onChange={handleProjectChange("name")}
+                defaultValue={projects.name}
                 required
               />
             </Form.Group>
             <Form.Group>
               <Form.Label>Technologies</Form.Label>
-
               <Form.Control
-                as="select"
-                name="technologies"
+                name="tech"
                 id="tech"
-                multiple
+                type="text"
+                placeholder="For Example; Node React Mongo etc...(with spaces)"
+                onChange={handleTech}
                 required
-              >
-                <option value="1">1</option>
-                <option value="2">2</option>
-              </Form.Control>
+              />
             </Form.Group>
-            <Form.Group controlId="exampleForm.ControlTextarea1">
-              <Form.Label>Example textarea</Form.Label>
-              <Form.Control as="textarea" rows="3" />
+            <Form.Group>
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows="5"
+                name="description"
+                onChange={handleProjectChange("description")}
+                defaultValue={projects.description}
+              />
             </Form.Group>
             <Button variant="primary" onClick={handleSubmit}>
               Save Changes
@@ -93,32 +187,76 @@ export default function Portfolio({ match }) {
       <Container>
         <h1>Portfolio Data</h1>
         <Form>
-          <Form.Group controlId="exampleForm.ControlInput1">
+          <Form.Group>
             <Form.Label>Name</Form.Label>
-            <Form.Control type="text" placeholder="" />
+
+            <Form.Control
+              type="text"
+              placeholder=""
+              defaultValue={portfolio.name}
+              onChange={handleChange("name")}
+            />
           </Form.Group>
 
-          <Form.Group controlId="exampleForm.ControlInput1">
+          <Form.Group>
             <Form.Label>Github</Form.Label>
-            <Form.Control type="text" placeholder="Your Github Profile" />
+            <Form.Control
+              name="github"
+              id="github"
+              type="text"
+              placeholder="Your Github Profile"
+              defaultValue={portfolio.github}
+              onChange={handleChange("github")}
+            />
           </Form.Group>
 
-          <Form.Group controlId="exampleForm.ControlInput1">
+          <Form.Group>
             <Form.Label>LinkedIn</Form.Label>
-            <Form.Control type="text" placeholder="Your LinkedIn Profile" />
+            <Form.Control
+              type="text"
+              name="linkedin"
+              id="linkedin"
+              placeholder="Your LinkedIn Profile"
+              defaultValue={portfolio.linkedin}
+              onChange={handleChange("linkedin")}
+            />
           </Form.Group>
 
-          <Form.Group controlId="exampleForm.ControlInput1">
+          <Form.Group>
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="name@example.com" />
+            <Form.Control
+              type="email"
+              placeholder="name@example.com"
+              name="email"
+              defaultValue={portfolio.email}
+              onChange={handleChange("email")}
+            />
           </Form.Group>
 
-          <Form.Group controlId="exampleForm.ControlTextarea1">
+          <Form.Group>
+            <Form.Label>Phone Number</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="03323696481"
+              name="phone_number"
+              defaultValue={portfolio.phone_number}
+              onChange={handleChange("phone_number")}
+            />
+          </Form.Group>
+
+          <Form.Group>
             <Form.Label>About Me</Form.Label>
-            <Form.Control as="textarea" rows="10" />
+            <Form.Control
+              as="textarea"
+              rows="10"
+              name="aboutme"
+              id="aboutme"
+              defaultValue={portfolio.aboutme}
+              onChange={handleChange("aboutme")}
+            />
           </Form.Group>
 
-          <Button variant="primary" type="submit">
+          <Button variant="primary" onClick={clickSubmit}>
             Save
           </Button>
         </Form>
