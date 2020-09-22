@@ -63,10 +63,24 @@ const update = async (req, res) => {
   }
 };
 
+const updateProjects = async (req, res) => {
+  try {
+    let portfolio = req.profile;
+    portfolio.projects.push(req.body);
+    portfolio.update = Date.now();
+    await portfolio.save();
+  } catch (err) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
 export default {
   create,
   read,
   list,
   update,
+  updateProjects,
   portfolioById,
 };
