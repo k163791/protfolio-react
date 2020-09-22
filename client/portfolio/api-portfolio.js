@@ -42,7 +42,7 @@ const read = async (params, credentials, signal) => {
   }
 };
 
-const update = async (params, credentials, user) => {
+const update = async (params, portfolioData) => {
   try {
     let response = await fetch("/api/portfolio/" + params.portfolioId, {
       method: "PUT",
@@ -50,7 +50,7 @@ const update = async (params, credentials, user) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(portfolioData),
     });
     return await response.json();
   } catch (err) {
@@ -58,4 +58,23 @@ const update = async (params, credentials, user) => {
   }
 };
 
-export { create, list, read, update };
+const updateProjects = async (params, projectsData) => {
+  try {
+    let response = await fetch(
+      "/api/portfolio/project/add/" + params.portfolioId,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(projectsData),
+      }
+    );
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { create, list, read, update, updateProjects };
