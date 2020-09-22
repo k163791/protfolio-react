@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -14,58 +14,72 @@ import mongo from "./../assets/images/mongo.jpg";
 import mysql from "./../assets/images/mysql.png";
 import psql from "./../assets/images/psql.jpg";
 import express from "./../assets/images/express.png";
+import techlogo from "./../assets/images/tech.jpg";
+import { list } from "./../portfolio/api-portfolio";
 
-export default function Projects() {
-  const projects = [
-    {
-      id: 1,
-      name: "Stadium Management System",
-      technologies: ["Laravel", "MySQL"],
-      description:
-        "This is the description for stadium management system we made for our DB Project, it's the worst project we have ever made but it's something",
-    },
-    {
-      id: 2,
-      name: "Friend Finder",
-      technologies: ["Node", "Mongo", "Express", "React"],
-      description: "friend finder",
-    },
-    {
-      id: 3,
-      name: "Friend Finder",
-      technologies: ["Node", "Mongo", "Express", "React"],
-      description: "friend finder",
-    },
-    {
-      id: 4,
-      name: "Stadium Management System",
-      technologies: ["Laravel", "MySQL"],
-      description:
-        "This is the description for stadium management system we made for our DB Project, it's the worst project we have ever made but it's something",
-    },
-    {
-      id: 5,
-      name: "Friend Finder",
-      technologies: ["Node", "Mongo", "Express", "React"],
-      description: "friend finder",
-    },
-    {
-      id: 6,
-      name: "Friend Finder",
-      technologies: ["Node", "Mongo", "Express", "React"],
-      description: "friend finder",
-    },
-  ];
-
+export default function Projects({ projects }) {
   const checkTechnology = (tech) => {
     if (tech === "Node") return nodejslogo;
-    else if (tech === "Laravel") return Laravel;
-    else if (tech === "React") return ReactLogo;
-    else if (tech === "Express") return express;
-    else if (tech === "Mongo") return mongo;
-    else if (tech === "MySQL") return mysql;
-    else if (tech === "PSQL") return psql;
-    else return null;
+    else if (tech === "Laravel" || tech === "laravel" || tech === "LARAVEL")
+      return Laravel;
+    else if (tech === "React" || tech === "react" || tech === "REACT")
+      return ReactLogo;
+    else if (tech === "Express" || tech === "express" || tech === "EXPRESS")
+      return express;
+    else if (
+      tech === "Mongo" ||
+      tech === "mongo" ||
+      tech === "MONGO" ||
+      tech === "MongoDB" ||
+      tech === "mongodb" ||
+      tech === "MONGODB"
+    )
+      return mongo;
+    else if (tech === "MySQL" || tech === "mysql" || tech === "MYSQL")
+      return mysql;
+    else if (tech === "PSQL" || tech === "psql") return psql;
+    else return techlogo;
+  };
+
+  const displayProjects = () => {
+    if (projects) {
+      return projects.map((project) => {
+        return (
+          <div style={{ padding: "20px" }}>
+            <Card
+              key={project._id}
+              style={{
+                width: "18rem",
+                height: "100%",
+              }}
+            >
+              <Card.Header style={{ fontWeight: "bold" }}>
+                {project.name}
+              </Card.Header>
+              <Card.Body>
+                <h6 style={{ fontWeight: "bold" }}>Description</h6>
+                <p>{project.description}</p>
+                <h6 style={{ fontWeight: "bold" }}>Technologies Used</h6>
+                <ListGroup>
+                  {project.technologies.map((tech, id) => {
+                    return (
+                      <ListGroup.Item key={id}>
+                        {tech}
+                        <Image
+                          className="float-right"
+                          src={checkTechnology(tech)}
+                          style={{ height: "50px", width: "50px" }}
+                        />
+                      </ListGroup.Item>
+                    );
+                  })}
+                </ListGroup>
+              </Card.Body>
+            </Card>
+          </div>
+        );
+      });
+    }
   };
 
   return (
@@ -80,44 +94,7 @@ export default function Projects() {
             alignItems: "space-around",
           }}
         >
-          {projects.map((project) => {
-            return (
-              <div style={{ padding: "20px" }}>
-                <Card
-                  key={project.id}
-                  style={{
-                    width: "18rem",
-                    height: "100%",
-                  }}
-                >
-                  <Container>
-                    <Card.Header style={{ fontWeight: "bold" }}>
-                      {project.name}
-                    </Card.Header>
-                    <Card.Body>
-                      <h6 style={{ fontWeight: "bold" }}>Description</h6>
-                      <p>{project.description}</p>
-                      <h6 style={{ fontWeight: "bold" }}>Technologies Used</h6>
-                      <ListGroup>
-                        {project.technologies.map((tech, id) => {
-                          return (
-                            <ListGroup.Item key={id}>
-                              {tech}
-                              <Image
-                                className="float-right"
-                                src={checkTechnology(tech)}
-                                style={{ height: "50px", width: "50px" }}
-                              />
-                            </ListGroup.Item>
-                          );
-                        })}
-                      </ListGroup>
-                    </Card.Body>
-                  </Container>
-                </Card>
-              </div>
-            );
-          })}
+          {displayProjects()}
         </Row>
       </Container>
     </div>

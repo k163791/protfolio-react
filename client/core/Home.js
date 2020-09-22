@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Jumbotron, Button, Image, Row } from "react-bootstrap";
+import { Jumbotron, Button, Image, Row, Col } from "react-bootstrap";
 import backgr from "./../assets/images/background2.jpg";
 import Avatar from "./../assets/images/avatar.png";
 import Tech from "./Technologies";
@@ -29,6 +29,8 @@ export default function Home() {
     };
   }, []);
 
+  const handleChange = () => {};
+
   return (
     <div id="home">
       <Jumbotron
@@ -53,28 +55,44 @@ export default function Home() {
             roundedCircle
             style={{ height: "171px", width: "180px" }}
           />
-          <h1>Uzair Hussain</h1>
+          <h1>{portfolio.name}</h1>
           <div style={{ fontSize: "12px" }}>
-            <p>k163791@nu.edu.pk - 03323696481</p>
+            <p>
+              {portfolio.email} - {portfolio.phone_number}
+            </p>
             <p>Full Stack Engineer</p>
           </div>
 
-          <Row
-            style={{
-              justifyContent: "space-evenly",
-            }}
-          >
-            <Button href={"/edit/" + portfolio._id} variant="success">
-              Edit Portfolio
-            </Button>
-
-            <Button variant="primary">My Resume</Button>
+          <Row>
+            <Col>
+              <Button href={"/edit/" + portfolio._id} variant="success">
+                Edit Portfolio
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                variant="primary"
+                href="https://drive.google.com/file/d/11hkSNhawd9V22TJgDd_1bceKbOzvfri4/view?usp=sharing"
+                target="_blank"
+              >
+                My Resume
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                variant="danger"
+                href="https://github.com/k163791"
+                target="_blank"
+              >
+                Github
+              </Button>
+            </Col>
           </Row>
         </div>
       </Jumbotron>
-      <About />
+      <About aboutme={portfolio.aboutme} />
       <Tech />
-      <Projects />
+      <Projects projects={portfolio.projects} />
       <Contact />
     </div>
   );

@@ -25,8 +25,8 @@ export default function Tech() {
                 />
                 <h5 style={{ fontWeight: "bold" }}>MongoDB</h5>
                 <p>
-                  I have been working on laravel for the past 8 months and am
-                  fairly proficient in it
+                  I have not worked on MongoDB on big scalable apps, i've only
+                  used it like 5 to 6 times for basic small scale projects
                 </p>
               </Col>
               <Col>
@@ -36,8 +36,11 @@ export default function Tech() {
                 />
                 <h5 style={{ fontWeight: "bold" }}>Express</h5>
                 <p>
-                  I have been working on laravel for the past 8 months and am
-                  fairly proficient in it
+                  I have extensive knowledge of Express framework, i have been
+                  exploring new things in it and have a really good undestanding
+                  of how to make backend calls, rendering static files and also
+                  stacking everthing into one server and rendering the server
+                  and client all in one stack
                 </p>
               </Col>
               <Col>
@@ -47,8 +50,9 @@ export default function Tech() {
                 />
                 <h5 style={{ fontWeight: "bold" }}>React</h5>
                 <p>
-                  I have been working on laravel for the past 8 months and am
-                  fairly proficient in it
+                  I am proficient in React, states, props etc, i know how to
+                  handle almost everything, but i'm not that good at designing
+                  front-end
                 </p>
               </Col>
               <Col>
@@ -58,8 +62,9 @@ export default function Tech() {
                 />
                 <h5 style={{ fontWeight: "bold" }}>Nodejs</h5>
                 <p>
-                  I have been working on laravel for the past 8 months and am
-                  fairly proficient in it
+                  Node is just a run time environment to run javascript on a
+                  system, i have been working on Node and express for almost 1.5
+                  years now.
                 </p>
               </Col>
             </Row>
@@ -71,16 +76,17 @@ export default function Tech() {
                 />
                 <h5 style={{ fontWeight: "bold" }}>MySQL</h5>
                 <p>
-                  I have been working on laravel for the past 8 months and am
-                  fairly proficient in it
+                  I have used MySQL for big scale projects like a pharmacy
+                  management integerated with hospital, patients and doctors
+                  management system, i can say that i'm very proficient in it.
                 </p>
               </Col>
               <Col>
                 <Image src={psql} style={{ height: "200px", width: "200px" }} />
                 <h5 style={{ fontWeight: "bold" }}>PSQL</h5>
                 <p>
-                  I have been working on laravel for the past 8 months and am
-                  fairly proficient in it
+                  I just used Postgres for like 2 small projects and haven't
+                  used it since but i have a understanding of how it works
                 </p>
               </Col>
               <Col>
@@ -90,7 +96,7 @@ export default function Tech() {
                 />
                 <h5 style={{ fontWeight: "bold" }}>Laravel</h5>
                 <p>
-                  I have been working on laravel for the past 8 months and am
+                  I have been working on laravel for almost an year now and am
                   fairly proficient in it
                 </p>
               </Col>
