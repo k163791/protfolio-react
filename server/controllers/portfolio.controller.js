@@ -69,6 +69,8 @@ const updateProjects = async (req, res) => {
     portfolio.projects.push(req.body);
     portfolio.update = Date.now();
     await portfolio.save();
+
+    res.json(portfolio);
   } catch (err) {
     return res.status(400).json({
       error: errorHandler.getErrorMessage(err),
