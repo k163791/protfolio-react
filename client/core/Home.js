@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Jumbotron, Button, Image, Row } from "react-bootstrap";
 import backgr from "./../assets/images/background2.jpg";
@@ -7,7 +7,28 @@ import Tech from "./Technologies";
 import About from "./AboutMe";
 import Projects from "./Projects";
 import Contact from "./Contact";
+import { list } from "./../portfolio/api-portfolio";
+
 export default function Home() {
+  const [portfolio, setPortfolio] = useState({});
+  useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
+    list(signal).then((data) => {
+      if (data && data.error) {
+        console.log(data.error);
+      } else {
+        setPortfolio(data[0]);
+        console.log(data[0]);
+      }
+    });
+
+    return function cleanup() {
+      abortController.abort();
+    };
+  }, []);
+
   return (
     <div id="home">
       <Jumbotron
@@ -43,7 +64,7 @@ export default function Home() {
               justifyContent: "space-evenly",
             }}
           >
-            <Button href="/edit" variant="success">
+            <Button href={"/edit/" + portfolio._id} variant="success">
               Edit Portfolio
             </Button>
 
