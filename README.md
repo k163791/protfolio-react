@@ -67,7 +67,7 @@ Run the following commands to run the project:
 - npm run development
 
 ## Demo
-    AWS: http://ec2-100-25-167-45.compute-1.amazonaws.com:443/
+AWS: http://ec2-54-175-23-238.compute-1.amazonaws.com:443/
 
 ## Server Side
 ### Models
